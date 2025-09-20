@@ -23,8 +23,6 @@ Maintaining optimal indoor climate is key for comfort. This project uses a DHT22
 <img src="images/device_right.jpg" alt="righ side" width="300" />
 <img src="images/device_left.jpg" alt="left side" width="300" />
 
-(Placeholder for images. Add more images by including additional lines with the format ![Image Description](images/your-image.jpg) after uploading to the images/ folder.)
-
 ## Required Materials
 * ESP32 NodeMCU-32S (~$5-10).
 * DHT22 sensor (~$2-5).
