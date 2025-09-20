@@ -19,9 +19,9 @@ Maintaining optimal indoor climate is key for comfort. This project uses a DHT22
 ### Project Images
 (Upload photos of the device, wiring, and OLED display to the images/ folder in this repository and update the links below.)
 
-![Project Overview](images/project-overview.jpg)
-![Wiring Diagram](images/wiring-diagram.jpg)
-![OLED Display](images/oled-display.jpg)
+<img src="images/device_front.jpg" alt="front" width="300" />
+<img src="images/device_right.jpg" alt="righ side" width="300" />
+<img src="images/device_left.jpg" alt="left side" width="300" />
 
 (Placeholder for images. Add more images by including additional lines with the format ![Image Description](images/your-image.jpg) after uploading to the images/ folder.)
 
