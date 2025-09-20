@@ -1,0 +1,81 @@
+esphome:
+  name: climate-sensor
+  friendly_name: Climate Sensor
+
+esp32:
+  board: nodemcu-32s  # NodeMCU-32S
+  framework:
+    type: arduino
+
+# WiFi settings
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  domain: .local
+
+# Home Assistant API
+api:
+  encryption:
+    key: !secret climate_sensor_api_encryption_key
+
+# OTA updates
+ota:
+  platform: esphome
+  password: !secret climate_sensor_ota_password
+
+# Logger for Serial Monitor
+logger:
+  level: DEBUG  # Minimize log noise
+
+# I2C for OLED
+i2c:
+  sda: GPIO21  # SDA pin for OLED
+  scl: GPIO22  # SCL pin for OLED
+  scan: true   # Scan for I2C devices to confirm address
+
+# 0.96 inch OLED display (SSD1306)
+display:
+  - platform: ssd1306_i2c
+    model: "SSD1306 128x64"
+    address: 0x3C  # Common address; confirm via logs if needed
+    lambda: |-
+      it.print(0, 0, id(font_small), "Temperature:");
+      it.printf(0, 10, id(font_large), "%.1f °C", id(temp_sensor).state);
+      it.print(0, 30, id(font_small), "Humidity:");
+      it.printf(0, 40, id(font_large), "%.1f %%", id(hum_sensor).state);
+
+# Fonts for display
+font:
+  - file: 'arial.ttf'  # Arial font file in ESPHome config directory
+    id: font_small
+    size: 10
+  - file: 'arial.ttf'
+    id: font_large
+    size: 20  # Restored to original size
+
+# DHT22 sensor configuration
+sensor:
+  - platform: dht
+    id: dht_sensor
+    pin: GPIO4  # DHT22 data pin on GPIO4
+    model: DHT22
+    temperature:
+      id: temp_sensor
+      name: "NodeMCU Temperature"
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
+      on_value:
+        - logger.log:
+            format: "Temperature: %.1f C sent"
+            args: ["x"]
+    humidity:
+      id: hum_sensor
+      name: "NodeMCU Humidity"
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+      on_value:
+        - logger.log:
+            format: "Humidity: %.1f percent sent"
+            args: ["x"]
+    update_interval: 5s  # Update sensor every 5s for Home Assistant
